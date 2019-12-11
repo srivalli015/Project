@@ -4,9 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class login {
+public class login 
+{
 
-	public static void main(String[] args)
+	void TC1()
 	{
 		System.setProperty("webdriver.gecko.driver", "D:\\$riv@lli\\geckodriver.exe");
 	String bpath = "http://apps.qaplanet.in/qahrm/login.php";
@@ -21,11 +22,15 @@ public class login {
 	driver.findElement(By.xpath("//input[@name='Submit']")).click();
 	
 	// 
-	if(driver.getTitle().equals(OrangeHRM - New Level of HR Management))
-	{
+	if(driver.getTitle().equals("OrangeHRM"))
+	
+	
 		System.out.println("Pass");
-		else
+	
+	else 
+		
 			System.out.println("Fail");
-	}
+		
+	
 	}
 }
