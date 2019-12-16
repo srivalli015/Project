@@ -1,0 +1,119 @@
+package hrm;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class login {
+  @Test(enabled=true,priority=1,groups="login")
+  public void TC1()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // valid user name & password
+	  
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qaplanet1");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("lab1");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  Assert.assertEquals(driver.getTitle(),"OrangeHRM");
+	  driver.findElement(By.xpath("//a[contains(text(),'Logout')]")).click();
+	  driver.close();
+  }
+
+  @Test(enabled=true,priority=2,groups="login")
+  public void TC2() throws InterruptedException
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // valid user name & Invalid password
+	  
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qaplanet1");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("labs");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  Thread.sleep(2000);
+	 /* if (driver.findElement(By.xpath("//*[@id='Table_01']/tbody/tr[1]/td[2]/table/tbody/tr[5]/td[2]/strong/font")).getText().equals("Invalid Login")) {
+		System.out.println("invalid pass");
+	} else {
+System.out.println("failed to invalid");
+	}*/
+	  Assert.assertEquals(driver.findElement(By.xpath("//font[contains(text(),'Invalid Login')]")).getText(),"Invalid Login");
+  //Assert.assertEquals(driver.findElement(By.xpath("//font[contains(text(),'Invalid Login')]")).getText().equals("Invalid Login"), false, null);
+	  driver.close();  
+  }
+ 
+  @Test(enabled=true,priority=3,groups="login")
+  public void TC3()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // Invalid user name & Valid password
+	  
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qapplanet");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("lab1");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  Assert.assertEquals(driver.findElement(By.xpath("//font[contains(text(),'Invalid Login')]")).getText(),"Invalid Login");
+	  driver.quit();
+  }
+  @Test(enabled=true,priority=4,groups="login")
+  public void TC4()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // Invalid user name & InValid password
+	  
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qapplanet");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("labs");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  Assert.assertEquals(driver.findElement(By.xpath("//font[contains(text(),'Invalid Login')]")).getText(),"Invalid Login");
+	  driver.quit();
+  }
+
+  @Test(enabled=true,priority=5,groups="login")
+  public void TC5()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // clear the fields
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qapplanet");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("labs");
+	  driver.findElement(By.xpath("//input[@name='clear']")).click();
+	  
+	  driver.quit();
+  }
+  
+  @Test(enabled=true,priority=6,groups="login")
+  public void TC6()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // Blank the text fields
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys(" ");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  driver.switchTo().alert().accept();
+	  
+	  driver.quit();
+  }
+ 
+  @Test(enabled=true,priority=7,groups="login")
+  public void TC7()
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	  WebDriver driver = new FirefoxDriver();
+	  driver.get("http://apps.qaplanet.in/qahrm/login.php");
+	  // click on  OrangeHRM link
+	 
+	  driver.findElement(By.xpath("//a[contains(text(),'OrangeHRM')]")).click();
+	  String wname = driver.getWindowHandle();
+	  driver.switchTo().window(wname);
+		driver.quit();
+}
+}
