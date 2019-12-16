@@ -1,0 +1,68 @@
+package hrm;
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+
+public class AdminPage
+{
+	WebDriver driver;
+	String bpath = "http://apps.qaplanet.in/qahrm/login.php";
+	 @Test(enabled=true,priority=8,groups="login")
+	  public void TC8() throws InterruptedException
+	  {
+		 
+		 
+		 Actions act = new Actions(driver);
+		 Thread.sleep(3000);
+		  act.moveToElement(driver.findElement(By.xpath("//span[@class='drop'][contains(text(),'Admin')]"))).perform();
+		  act.moveToElement(driver.findElement(By.xpath("//a[@class='l2_link parent job']//span[contains(text(),'Job')]"))).perform();
+		  act.moveToElement(driver.findElement(By.xpath("//span[contains(text(),'Pay Grades')]"))).click().perform();
+		  Thread.sleep(2000);
+		  driver.switchTo().frame("rightMenu"); //switching to SAL136
+		driver.findElement(By.xpath("//a[contains(text(),'SAL136')]")).click();
+		
+		Select lf = new Select (driver.findElement(By.xpath("//select[@id='cmbUnAssCurrency']")));
+		lf.selectByValue("BGL");
+		
+		driver.findElement(By.xpath("//input[@id='txtMinSal']")).sendKeys("2000");
+		driver.findElement(By.xpath("//input[@id='txtMaxSal']")).sendKeys("50000");
+		driver.findElement(By.xpath("//input[@id='saveBtn']")).click();
+	driver.findElement(By.xpath("//form[@id='frmSalGrd']//input[@class='savebutton']")).click();
+		Assert.assertEquals(driver.getTitle(),"OrangeHRM");
+		Thread.sleep(2000);
+					 
+  }
+
+  @BeforeMethod
+  public void beforeMethod() throws InterruptedException 
+  {
+
+	System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	driver = new FirefoxDriver();
+	driver.get(bpath);
+	  driver.findElement(By.xpath("//input[@name='txtUserName']")).sendKeys("qaplanet1");
+	  driver.findElement(By.xpath("//input[@name='txtPassword']")).sendKeys("lab1");
+	  driver.findElement(By.xpath("//input[@name='Submit']")).click();
+	  Thread.sleep(3000);
+	  Assert.assertEquals(driver.getTitle(),"OrangeHRM");
+	  driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+  }
+
+  @AfterMethod
+  public void afterMethod()
+  {
+	//  driver.close();
+  }
+
+
+}
