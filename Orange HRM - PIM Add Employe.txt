@@ -1,0 +1,59 @@
+package hrm;
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterMethod;
+
+public class PIM 
+{
+	WebDriver driver;
+	String bpath = "http://apps.qaplanet.in/qahrm/login.php";
+	
+  @Test
+  public void TC9 () throws IOException 
+  {
+	  
+	  Actions act = new Actions(driver);
+	act.moveToElement(driver.findElement(By.xpath("//span[@class='drop current']"))).perform();
+	act.moveToElement(driver.findElement(By.xpath("//span[contains(text(),'Add Employee')]"))).click().perform();
+  
+	driver.switchTo().frame("rightMenu"); // switching to name
+	driver.findElement(By.name("txtEmpLastName")).sendKeys("Manu");
+	driver.findElement(By.name("txtEmpFirstName")).sendKeys("M");
+	driver.findElement(By.name("txtEmpMiddleName")).sendKeys("M");
+	driver.findElement(By.name("txtEmpNickName")).sendKeys("L");
+	
+	//browse the photo
+	act.moveToElement(driver.findElement(By.xpath("//input[@id='photofile']"))).click().perform();
+	Runtime.getRuntime().exec("D:\\Rithvik\\Auto IT\\file upload.exe");
+  }
+  @BeforeMethod
+  public void beforeMethod() 
+  {
+	  System.setProperty("webdriver.gecko.driver","D:\\Rithvik\\geckodriver.exe");
+	driver = new FirefoxDriver();
+	driver.get(bpath);
+
+	driver.manage().timeouts().implicitlyWait(100,TimeUnit.SECONDS);
+
+	driver.findElement(By.name("txtUserName")).sendKeys("qaplanet2");
+	driver.findElement(By.name("txtPassword")).sendKeys("lab2");
+	driver.findElement(By.name("Submit")).click();
+  }
+
+  @AfterMethod
+  public void afterMethod() 
+  {
+	  // driver.close();
+  }
+
+}
+
